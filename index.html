@@ -9,13 +9,43 @@
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
+    <style>
+    #show{
+        width: 50px;
+        height: 50px;;
+    }
+    #color-bar{
+        position: absolute;
+        top: 100px;
+        height: 8px;
+        width: 300px;
+        background: linear-gradient(to right,hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%));
+        border-radius: 20px;
+    }
+    </style>
 </head>
 <body>
-    <div id="colorPicker"></div>
+    <div id="colorPicker">
+        <div id="show"></div>
+        <div id="color-bar"></div>
+    </div>
 </body>
 <script>
-$(function(){
-    console.log($('#colorPicker'));
-})
+
+const show = $('#show');
+
+show.css('background-color', 'rgba(0, 255, 0, 1)');
+
+
+const setRed = () => {
+    show.css('background-color', 'rgba(255, 0, 0, 1)');
+}
+const setGreen = () => {
+    show.css('background-color', 'rgba(0, 255, 0, 1)');
+}
+const setBlue = () => {
+    show.css('background-color', 'rgba(0, 0, 255, 1)');
+}
+
 </script>
 </html>
