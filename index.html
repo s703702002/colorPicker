@@ -14,7 +14,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        background-color: black;
+        /* background-color: black; */
     }
     #show{
         width: 200px;
@@ -29,18 +29,71 @@
         border-radius: 20px;
     }
     #brightness-bar, #saturation-bar{
-        height: 10px;
+        height: 8px;
         width: 200px;
         margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    input[type="range"]{
+        -webkit-appearance: none;
+        overflow:hidden;     /* 限定範圍 */
+        outline : none;      /* 避免點選會有藍線或虛線 */
+        background:none;
+        margin: 0;
+        width: 100%;
+    }
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 12px;
+        width: 5px;
+        background: #b1b1b1;
+        cursor: pointer;
+    }
+    .list{
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        position: absolute;
+        width: 100%;
+        top: 100%;
+        display: flex;
+    }
+    .list > li{
+        flex: 1;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        height: 7px;
     }
     </style>
 </head>
 <body>
     <div id="colorPicker">
         <div id="show"></div>
-        <div id="brightness-bar"></div>
-        <div id="saturation-bar"></div>
+        <p>Brightness</p>
+        <div id="brightness-bar">
+            <input id="br-bar" type="range" min="0" max="100" step="10" />
+            <ul class="list">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <p>Saturation</p>
+        <div id="saturation-bar">
+            <input id="sa-bar" type="range" min="0" max="100" step="10" />
+        </div>
     </div>
+    
     <!-- <div id="color-bar"></div> -->
 </body>
 <script>
