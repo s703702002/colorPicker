@@ -10,6 +10,12 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
     <style>
+    html,body{
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: black;
+    }
     #show{
         width: 200px;
         height: 200px;;
@@ -22,17 +28,26 @@
         background: linear-gradient(to right,hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%),hsl(300,100%,50%),hsl(360,100%,50%));
         border-radius: 20px;
     }
+    #brightness-bar, #saturation-bar{
+        height: 10px;
+        width: 200px;
+        margin-top: 10px;
+    }
     </style>
 </head>
 <body>
     <div id="colorPicker">
         <div id="show"></div>
-        <!-- <div id="color-bar"></div> -->
+        <div id="brightness-bar"></div>
+        <div id="saturation-bar"></div>
     </div>
+    <!-- <div id="color-bar"></div> -->
 </body>
 <script>
 
 const show = $('#show');
+const brightBar = $('#brightness-bar');
+const saturationBar = $('#saturation-bar');
 const width = show.width();
 const height = show.height();
 
@@ -50,10 +65,11 @@ show.on('mousemove',(e)=>{
 
     const theta = 90 - Math.floor ( Math.atan2(y2,x2) / Math.PI * 180 );
 
-    console.log('theta' ,theta);
+    let colorSet = `hsl(${theta}, ${saturation}, ${lightness})`;
 
-    show.css('background-color', `hsl(${theta}, ${saturation}, ${lightness})`);
-
+    show.css('background-color', colorSet);
+    saturationBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${theta}, 0%, 50%))`);
+    brightBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${theta}, 100%, 0%))`);
 })
 
 </script>
