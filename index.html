@@ -16,9 +16,21 @@
         padding: 0;
         /* background-color: black; */
     }
+    img{
+        max-width: 100%;
+    }
     #show{
-        width: 200px;
-        height: 200px;;
+        width: 140px;
+        height: 140px;
+        position: relative;
+    }
+    #picker{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        text-align: center;
+        pointer-events: none;
     }
     #color-bar{
         position: absolute;
@@ -71,7 +83,12 @@
 </head>
 <body>
     <div id="colorPicker">
-        <div id="show"></div>
+        <div id="show">
+            <div id="picker">
+                <img src="./imgs/picker.png" alt="picker">
+            </div>
+            <img src="./imgs/circle.png" alt="circle">
+        </div>
         <p>Brightness</p>
         <div id="brightness-bar">
             <input id="br-bar" type="range" min="0" max="100" step="10" />
@@ -101,6 +118,7 @@
 const show = $('#show');
 const brightBar = $('#brightness-bar');
 const saturationBar = $('#saturation-bar');
+const picker = $('#picker');
 const width = show.width();
 const height = show.height();
 
@@ -123,6 +141,7 @@ show.on('mousemove',(e)=>{
     show.css('background-color', colorSet);
     saturationBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${theta}, 0%, 50%))`);
     brightBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${theta}, 100%, 0%))`);
+    picker.css('transform', `rotate(${theta}deg)`);
 })
 
 </script>
