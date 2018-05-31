@@ -14,15 +14,19 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        /* background-color: black; */
+        background-color: rgb(26, 26, 26);
+        color: #fff;
     }
     img{
         max-width: 100%;
+        pointer-events: none;
     }
     #show{
         width: 140px;
         height: 140px;
         position: relative;
+        -webkit-user-select: none; /* for Chrome */
+        -moz-user-select: none;  /* for Firefox */
     }
     #picker{
         position: absolute;
@@ -81,23 +85,32 @@
     }
     .mask{
         position: absolute;
-        width: 50%;
-        height: 50%;
+        width: 80%;
+        height: 80%;
         top: 50%;
         left: 50%;
         border-radius: 50%;
         transform: translate(-50%,-50%);
-        /* pointer-events: none; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .color-show{
+        width: 60%;
+        height: 60%;
+        border-radius: 50%;
     }
     </style>
 </head>
 <body>
     <div id="colorPicker">
-        <div id="show">
+        <div id="show" unselectable="on">
             <div id="picker">
                 <img style="margin-top: -5px;" src="./imgs/picker.png" alt="picker">
             </div>
-            <div id="circle" class="mask"></div>
+            <div id="circle" class="mask">
+                <div class="color-show"></div>
+            </div>
             <img src="./imgs/circle.png" alt="circle">
         </div>
         <p>Brightness</p>
@@ -118,7 +131,15 @@
         </div>
         <p>Saturation</p>
         <div id="saturation-bar">
-            <input id="sa-bar" type="range" min="0" max="100" step="10" />
+            <input id="sa-bar" type="range" value="100" min="0" max="100" step="10" />
+        </div>
+        <div class="detail">
+            <h5>hex</h5>
+            <p id="hex"></p>
+            <h5>rgb</h5>
+            <p id="rgb"></p>
+            <h5>hsl</h5>
+            <p id="hsl"></p>
         </div>
     </div>
     
@@ -128,37 +149,121 @@
 
 const show = $('#show');
 const mask = $('#show .mask');
+const colorShow = mask.children('.color-show');
 const brightBar = $('#brightness-bar');
 const saturationBar = $('#saturation-bar');
 const picker = $('#picker');
+const hex = $('#hex');
+const rgb = $('#rgb');
+const hsl = $('#hsl');
+
 const width = show.width();
 const height = show.height();
 
-let saturation = '100%',
-    lightness = '50%';
+let isMouseDown = false;
+let hue=0, saturation=100, brightness=50;
 
-$('#circle').on('mousemove', ()=>{
-    console.log('mousemove!')
-})
-
-show.on('mousemove',(e)=>{
-
+function getTheta(e){
     // 圓心
     const x1 = width / 2;
     const y1 = height / 2 ;
-
     const x2 = e.offsetX - x1;
     const y2 = y1 - e.offsetY ;
+    const theta = 90 - Math.round ( Math.atan2(y2,x2) / Math.PI * 180 );
+    return theta;
+}
 
-    const theta = 90 - Math.floor ( Math.atan2(y2,x2) / Math.PI * 180 );
+function hslToRgb(h, s, l){
+    var r, g, b;
 
-    let colorSet = `hsl(${theta}, ${saturation}, ${lightness})`;
+    if(s == 0){
+        r = g = b = l; // achromatic
+    }else{
+        var hue2rgb = function hue2rgb(p, q, t){
+            if(t < 0) t += 1;
+            if(t > 1) t -= 1;
+            if(t < 1/6) return p + (q - p) * 6 * t;
+            if(t < 1/2) return q;
+            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+            return p;
+        }
 
-    mask.css('background-color', colorSet);
-    saturationBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${theta}, 0%, 50%))`);
-    brightBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${theta}, 100%, 0%))`);
-    picker.css('transform', `rotate(${theta}deg)`);
+        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        var p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+    }
+
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+function rgbToHex(d){
+    return ("0"+d.toString(16)).slice(-2).toUpperCase();
+}
+
+function setColor(hue, saturation, lightness){
+    const h = hue / 360;
+    const s = saturation/100;
+    const l = lightness/100;
+    const rgbColor = hslToRgb(h,s,l);
+    const r = rgbColor[0];
+    const g = rgbColor[1];
+    const b = rgbColor[2];
+    const hex1 = rgbToHex(r);
+    const hex2 = rgbToHex(g);
+    const hex3 = rgbToHex(b);
+
+    const colorSet = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const rgbSet = `rgb(${r}, ${g}, ${b})`;
+    const hexSet = `#${hex1}${hex2}${hex3}`;
+
+    hsl.text(colorSet);
+    rgb.text(rgbSet);
+    hex.text(hexSet);
+
+    colorShow.css('background-color', colorSet);
+    saturationBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${hue}, 0%, 50%))`);
+    brightBar.css('background', `linear-gradient(to left, ${colorSet}, hsl(${hue}, 100%, 0%))`);
+    picker.css('transform', `rotate(${hue}deg)`);
+}
+
+
+setColor(hue, saturation, brightness);
+
+saturationBar.on('change', (e)=>{
+    saturation = e.target.value;
+    setColor(hue, saturation, brightness);
 })
+
+brightBar.on('change', (e)=>{
+    brightness = e.target.value;
+    setColor(hue, saturation, brightness);
+})
+
+mask.on('mousedown mousemove', (e)=>{
+    e.stopPropagation();
+})
+
+show.on('mouseleave',()=>{
+    isMouseDown = false;
+});
+
+show.on('mousedown',(e)=>{
+    isMouseDown = true;
+    hue = getTheta(e);
+    setColor(hue, saturation, brightness);
+});
+
+show.on('mousemove',(e)=>{
+    if(!isMouseDown) return;
+    hue = getTheta(e);
+    setColor(hue, saturation, brightness);
+})
+
+show.on('mouseup', ()=>{
+    isMouseDown = false;
+});
 
 </script>
 </html>
