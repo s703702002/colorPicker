@@ -37,11 +37,27 @@
     background-color: red;
     transform: translateY(0);
   }
+
+  #ani {
+    animation-name: down;
+    animation-duration: 400ms;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+  }
+
+  @keyframes down {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
   </style>
 </head>
 <body>
   <h1>I am Iframe</h1>
-  <header>sticky header</header>
+  <header id="ani">sticky header</header>
   <div>
     <h2>hi</h2>
     <h2>hi</h2>
