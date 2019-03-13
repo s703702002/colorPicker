@@ -35,14 +35,14 @@
     height: 30px;
     z-index: 10;
     background-color: red;
-    visibility: hidden;
+    /* visibility: hidden; */
     transform: translateY(-100%);
     transition: 400ms;
   }
 
   .show{
     transform: translateY(0%);
-    visibility: visible;
+    /* visibility: visible; */
   }
 
   #ani {
@@ -194,15 +194,19 @@ wrapper.addEventListener('scroll', function(e) {
   console.log(e.srcElement.scrollTop);
 
   if(e.srcElement.scrollTop > 100 && e.srcElement.scrollTop < 1000) {
-    header.classList.add('show');
+    // header.classList.add('show');
+    header.style = 'transform: translateY(0%);visibility: visible;';
   } else {
-    header.classList.remove('show');
+    header.style = '';
+    // header.classList.remove('show');
   }
 
   if (e.srcElement.scrollTop > 1100 && e.srcElement.scrollTop < 2000) {
-    header2.classList.add('show');
+    // header2.classList.add('show');
+    header2.style = 'transform: translateY(0%);visibility: visible;';
   } else {
-    header2.classList.remove('show');
+    // header2.classList.remove('show');
+    header2.style = '';
   }
 });
 </script>
