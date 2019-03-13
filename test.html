@@ -8,18 +8,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <style>
   iframe {
-    /* position: absolute; */
-    background-color: #FFF;
-    border: 0;
-    display: block;
-    height: 100vh;
+    height: 100%;
     width: 100%;
+  }
+  .scroll-wrapper {
+	  -webkit-overflow-scrolling: touch;
+  	overflow-y: scroll;
   }
   </style>
 </head>
 <body>
   <h1>hi Test page!</h1>
-  <div style="overflow:auto;-webkit-overflow-scrolling:touch">
+  <div class="scroll-wrapper">
     <iframe  allowfullscreen="true" allowpaymentrequest="true" scrolling="yes" src="./iframe.html" frameborder="0"></iframe>
   </div>
 </body>
