@@ -7,6 +7,17 @@
   <title>Iframe</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <style>
+
+  #i-amp-html-wrapper {
+    display: block;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
   html, body {
     height: auto !important;
   }
@@ -133,5 +144,24 @@
     <h2>hi</h2>
     <h2>hi</h2>
   </div>
+<script>
+// Create wrapper.
+const wrapper = document.createElement('html');
+wrapper.id = 'i-amp-html-wrapper';
+// Setup classes and styles.
+wrapper.className = document.documentElement.className;
+document.documentElement.className = '';
+document.documentElement.style = '';
+wrapper.style = '';
+// Attach wrapper straight inside the document root.
+document.documentElement.appendChild(wrapper);
+// Reparent the body.
+const body = document.body;
+body.style = 'position: relative;'
+wrapper.appendChild(body);
+Object.defineProperty(document, 'body', {
+  get: () => body,
+});
+</script>
 </body>
 </html>
