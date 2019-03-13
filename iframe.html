@@ -35,14 +35,21 @@
     height: 30px;
     z-index: 10;
     background-color: red;
-    transform: translateY(0);
+    visibility: hidden;
+    transform: translateY(-100%);
+    transition: 400ms;
+  }
+
+  .show{
+    transform: translateY(0%);
+    visibility: visible;
   }
 
   #ani {
-    animation-name: down;
+    /* animation-name: down;
     animation-duration: 400ms;
     animation-fill-mode: both;
-    animation-timing-function: linear;
+    animation-timing-function: linear; */
   }
 
   @keyframes down {
@@ -58,6 +65,7 @@
 <body>
   <h1>I am Iframe</h1>
   <header id="ani">sticky header</header>
+  <header id="ani2">sticky header2</header>
   <div>
     <h2>hi</h2>
     <h2>hi</h2>
@@ -80,7 +88,7 @@
     <h2>hi</h2>
     <h2>hi</h2>
     <h2>hi</h2>
-    <h2>hi</h2>
+    <h2 id="target">OMGGGGGG</h2>
     <h2>hi</h2>
     <h2>hi</h2>
     <h2>hi</h2>
@@ -161,7 +169,7 @@
     <h2>hi</h2>
   </div>
 <script>
-// Create wrapper.
+
 const wrapper = document.createElement('html');
 wrapper.id = 'i-amp-html-wrapper';
 // Setup classes and styles.
@@ -177,6 +185,25 @@ body.style = 'position: relative;'
 wrapper.appendChild(body);
 Object.defineProperty(document, 'body', {
   get: () => body,
+});
+
+const header = document.getElementById('ani');
+const header2 = document.getElementById('ani2');
+
+wrapper.addEventListener('scroll', function(e) {
+  console.log(e.srcElement.scrollTop);
+
+  if(e.srcElement.scrollTop > 100 && e.srcElement.scrollTop < 1000) {
+    header.classList.add('show');
+  } else {
+    header.classList.remove('show');
+  }
+
+  if (e.srcElement.scrollTop > 1100 && e.srcElement.scrollTop < 2000) {
+    header2.classList.add('show');
+  } else {
+    header2.classList.remove('show');
+  }
 });
 </script>
 </body>
