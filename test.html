@@ -21,8 +21,19 @@
 </head>
 <body>
   <h1>hi Test page!</h1>
+  <input type="text" id="txt">
+  <button id="btn">click me to copy</button>
   <div class="scroll-wrapper">
     <iframe  allowfullscreen="true" src="./iframe.html"></iframe>
   </div>
+  <script>
+  const int = document.getElementById('txt')
+  const btn = document.getElementById('btn')
+  btn.addEventListener('click', (e) => {
+    int.select();
+    int.focus();
+    document.execCommand('copy')
+  })
+  </script>
 </body>
 </html>
