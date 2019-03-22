@@ -17,11 +17,14 @@
   	overflow-y: scroll;
     height: 300px;
   }
+  input {
+    font-size: 16px;
+  }
   </style>
 </head>
 <body>
-  <h1>hi Test page!</h1>
-  <input type="text" id="txt" contenteditable>
+  <h1>Test page!</h1>
+  <input type="text" id="txt" contenteditable="true" hidden>
   <button id="btn">click me to copy</button>
   <div class="scroll-wrapper">
     <iframe  allowfullscreen="true" src="./iframe.html"></iframe>
@@ -31,13 +34,15 @@
   const btn = document.getElementById('btn')
   btn.addEventListener('click', (e) => {
     int.value = window.decodeURIComponent(window.location.hash.substr(1));
+    int.hidden = false;
     const range = document.createRange();
     range.selectNode(int);
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
-    int.setSelectionRange(0, 999999);
-    document.execCommand('copy')
+    int.setSelectionRange(0, -1);
+    document.execCommand('copy');
+    int.hidden = true;
   })
   </script>
 </body>
