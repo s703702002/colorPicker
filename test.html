@@ -19,12 +19,15 @@
   }
   input {
     font-size: 16px;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
   }
   </style>
 </head>
 <body>
   <h1>Test page!</h1>
-  <input type="text" id="txt" contenteditable="true" hidden>
+  <input type="text" id="txt" contenteditable="true">
   <button id="btn">click me to copy</button>
   <div class="scroll-wrapper">
     <iframe  allowfullscreen="true" src="./iframe.html"></iframe>
@@ -34,7 +37,6 @@
   const btn = document.getElementById('btn')
   btn.addEventListener('click', (e) => {
     int.value = window.decodeURIComponent(window.location.hash.substr(1));
-    int.hidden = false;
     const range = document.createRange();
     range.selectNode(int);
     const sel = window.getSelection();
@@ -42,7 +44,6 @@
     sel.addRange(range);
     int.setSelectionRange(0, -1);
     document.execCommand('copy');
-    int.hidden = true;
   })
   </script>
 </body>
