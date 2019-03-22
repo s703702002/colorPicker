@@ -21,7 +21,7 @@
 </head>
 <body>
   <h1>hi Test page!</h1>
-  <input type="text" id="txt">
+  <input type="text" id="txt" contenteditable>
   <button id="btn">click me to copy</button>
   <div class="scroll-wrapper">
     <iframe  allowfullscreen="true" src="./iframe.html"></iframe>
@@ -30,8 +30,13 @@
   const int = document.getElementById('txt')
   const btn = document.getElementById('btn')
   btn.addEventListener('click', (e) => {
-    int.select();
-    int.focus();
+    int.value = window.decodeURIComponent(window.location.hash.substr(1));
+    const range = document.createRange();
+    range.selectNode(int);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    int.setSelectionRange(0, 999999);
     document.execCommand('copy')
   })
   </script>
