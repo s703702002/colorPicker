@@ -40,7 +40,7 @@
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
-    int.setSelectionRange(0, 9999);
+    int.setSelectionRange(0, int.value.length);
     document.execCommand('copy');
     int.hidden = true;
     int.value = '';
