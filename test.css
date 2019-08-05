@@ -1,7 +1,7 @@
 html {
   line-height: 1.4;
   height: 100%;
-  /* touch-action: manipulation; */
+  touch-action: manipulation;
 }
 body {
   height: 100%;
