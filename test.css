@@ -6,6 +6,11 @@ html {
 body {
   height: 100%;
   overflow: auto;
+  touch-action: manipulation;
+}
+
+#testing {
+  color: red;
 }
 
 .container {
