@@ -5,14 +5,24 @@ html {
 }
 body {
   height: 100%;
+  overflow: auto;
+}
+
+.container {
+  position: relative;
+  width: 414px;
 }
 
 .charge {
   width: 47%;
-  background-color: red;
   animation-name: press;
   animation-duration: 0.2s;
   animation-iteration-count: infinite;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
 }
 
 @keyframes press{
