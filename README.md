@@ -38,3 +38,4 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 
 ### url
 Your site is published at https://s703702002.github.io/colorPicker/
+Your test is published at https://s703702002.github.io/colorPicker/test.html
