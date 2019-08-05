@@ -7,6 +7,7 @@
   <title>Test!</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="./test.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <style>
   iframe {
     height: 100%;
@@ -36,22 +37,30 @@
     </div>
   </div>
   <script>
-  const int = document.getElementById('txt')
-  const btn = document.getElementById('btn')
-  btn.addEventListener('click', (e) => {
-    int.value = window.decodeURIComponent(window.location.hash.substr(1));
-    int.hidden = false;
-    const range = document.createRange();
-    range.selectNode(int);
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    int.focus();
-    int.setSelectionRange(0, int.value.length);
-    document.execCommand('copy');
-    int.hidden = true;
-    int.value = '';
-  })
+  window.onload = function() {
+    var doubleTouchStartTimestamp = 0;
+    $('.charge').on('touchstart', function(e) {
+      e.preventDefault();
+    })
+
+    const int = document.getElementById('txt')
+    const btn = document.getElementById('btn')
+    btn.addEventListener('click', (e) => {
+      int.value = window.decodeURIComponent(window.location.hash.substr(1));
+      int.hidden = false;
+      const range = document.createRange();
+      range.selectNode(int);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      int.focus();
+      int.setSelectionRange(0, int.value.length);
+      document.execCommand('copy');
+      int.hidden = true;
+      int.value = '';
+    })
+  }
+  
   </script>
 </body>
 </html>
